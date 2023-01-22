@@ -1,0 +1,1849 @@
+@prefix : <http://www.semanticweb.org/AstronomyOntology> .
+@prefix wd: <http://www.wikidata.org/wiki/> .
+@prefix dbo: <https://dbpedia.org/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix astroo: <http://www.semanticweb.org/AstronomyOntology#> .
+@base <http://www.semanticweb.org/AstronomyOntology> .
+
+<http://www.semanticweb.org/AstronomyOntology> rdf:type owl:Ontology ;
+                                                owl:imports <http://www.ontologydesignpatterns.org/cp/owl/list.owl> ,
+                                                            <http://www.ontologydesignpatterns.org/cp/owl/partof.owl> ;
+                                                <http://purl.org/dc/elements/1.1/creator> "Edoardo Rolfo" ;
+                                                <http://purl.org/dc/elements/1.1/date> "09-01-2023" ;
+                                                <http://purl.org/dc/elements/1.1/description> """Ontologia ideata per modellare i principali oggetti  noti all'uomo che si possono osservare nello Spazio.
+L'obietivo è quello di fornire le informazioni più rilevanti riguardo ai corpi ed agli oggetti celesti che fluttuano nello spazio, indicando le loro caratteristiche principali come il nome, la tipologia di oggetto astronomico a cui appartiene e la distanza dal Sole"""@it ;
+                                                <http://purl.org/dc/elements/1.1/title> "Astronomy Ontology" ;
+                                                <http://purl.org/vocab/vann/#preferredNamespacePrefix> "astroo" ,
+                                                                                                       "http://www.semanticweb.org/AstronomyOntology" ;
+                                                rdfs:label "AstronomyOntology" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+<http://purl.org/dc/elements/1.1/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/date
+<http://purl.org/dc/elements/1.1/date> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/description
+<http://purl.org/dc/elements/1.1/description> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/title
+<http://purl.org/dc/elements/1.1/title> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/#preferredNamespacePrefix
+<http://purl.org/vocab/vann/#preferredNamespacePrefix> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/vocab/vann/#preferredNamespaceUri
+<http://purl.org/vocab/vann/#preferredNamespaceUri> rdf:type owl:AnnotationProperty .
+
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.ontologydesignpatterns.org/cp/owl/bag.owl#itemOf
+<http://www.ontologydesignpatterns.org/cp/owl/bag.owl#itemOf> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows
+<http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.ontologydesignpatterns.org/cp/owl/partof.owl#hasPart
+<http://www.ontologydesignpatterns.org/cp/owl/partof.owl#hasPart> owl:equivalentProperty astroo:raggrupa ;
+                                                                  rdfs:domain astroo:Galassia ;
+                                                                  rdfs:range astroo:Sistema .
+
+
+###  http://www.ontologydesignpatterns.org/cp/owl/partof.owl#isPartOf
+<http://www.ontologydesignpatterns.org/cp/owl/partof.owl#isPartOf> rdfs:domain astroo:Sistema ;
+                                                                   rdfs:range astroo:Galassia .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#appartieneA
+astroo:appartieneA rdf:type owl:ObjectProperty ;
+                   owl:inverseOf astroo:comprendePianeti ;
+                   rdfs:domain astroo:Pianeta_non_interstellare ;
+                   rdfs:range astroo:Sistema_planetario ;
+                   owl:propertyChainAxiom ( astroo:orbitaAttornoStella
+                                            astroo:centroDiGravitàDi
+                                          ) ;
+                   rdfs:comment "Relazione che esprime lo stato di appartenenza di un pianeta non interstellare ad un sistema planetario."@it ;
+                   rdfs:label "appartieneA"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#attrae
+astroo:attrae rdf:type owl:ObjectProperty ,
+                       owl:SymmetricProperty ,
+                       owl:TransitiveProperty ,
+                       owl:ReflexiveProperty ;
+              rdfs:domain astroo:Oggetto_astronomico ;
+              rdfs:range astroo:Oggetto_astronomico ;
+              rdfs:comment "Relazione che esprime l'attrazione gravitazionale che un oggetto astronomico esercita su se stesso e sugli altri."@it ;
+              rdfs:label "attrae"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#centroDiGravitàDi
+astroo:centroDiGravitàDi rdf:type owl:ObjectProperty ;
+                         owl:inverseOf astroo:formatoAttornoA ;
+                         rdfs:domain astroo:Stella ;
+                         rdfs:range astroo:Sistema_planetario ;
+                         rdfs:comment "Relazione che definisce una stella come centro di gravità attorno a cui si è formato un sistema planetario."@it ,
+                                      "centroDiGravitàDi"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#comprendePianeti
+astroo:comprendePianeti rdf:type owl:ObjectProperty ;
+                        rdfs:domain astroo:Sistema_planetario ;
+                        rdfs:range astroo:Pianeta_non_interstellare ;
+                        rdfs:comment "Relazione che definisce quali pianeti un sistema plaentario comprende."@it ;
+                        rdfs:label "comprendePianeti"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#faOrbitarePianeta
+astroo:faOrbitarePianeta rdf:type owl:ObjectProperty ;
+                         owl:inverseOf astroo:orbitaAttornoStella ;
+                         rdfs:domain astroo:Stella ;
+                         rdfs:range astroo:Pianeta_non_interstellare ;
+                         rdfs:comment "Relazione che definisce i pianeti che orbitano attorno ad una stella."@it ;
+                         rdfs:label "faOrbitarePianeta"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#faOrbitareSatellite
+astroo:faOrbitareSatellite rdf:type owl:ObjectProperty ;
+                           owl:inverseOf astroo:orbitaAttornoPianeta ;
+                           rdfs:domain astroo:Pianeta ;
+                           rdfs:range astroo:Satellite_naturale ;
+                           rdfs:comment "Relazione che definisce come satellite un corpo celeste orbitante attorno ad un pianeta."@it ;
+                           rdfs:label "faOrbitareSatellite"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#fluttuaIn
+astroo:fluttuaIn rdf:type owl:ObjectProperty ;
+                 rdfs:domain astroo:Pianeta_non_interstellare ;
+                 rdfs:range astroo:Galassia ;
+                 owl:propertyChainAxiom ( astroo:orbitaAttornoStella
+                                          astroo:centroDiGravitàDi
+                                          astroo:situatoIn
+                                        ) ;
+                 rdfs:comment "Relazione che esprime in quale galassia fluttua un pianeta."@it ;
+                 rdfs:label "fluttuaIn"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#formaSistemaStellare
+astroo:formaSistemaStellare rdf:type owl:ObjectProperty ;
+                            owl:inverseOf astroo:insiemeDiStelle ;
+                            rdfs:domain astroo:Stella ;
+                            rdfs:range astroo:Sistema_stellare ;
+                            rdfs:comment "Relazione che definisce una stella come parte dell'insieme di stelle di un sistema stellare."@it ;
+                            rdfs:label "formaSistemaStellare"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#formatoAttornoA
+astroo:formatoAttornoA rdf:type owl:ObjectProperty ;
+                       rdfs:domain astroo:Sistema_planetario ;
+                       rdfs:range astroo:Stella ;
+                       rdfs:comment "Relazione che definisce attorno a quale stella si è formato il sistema planetario."@it ;
+                       rdfs:label "formatoAttornoA"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#formatoDaAltriCorpi
+astroo:formatoDaAltriCorpi rdf:type owl:ObjectProperty ;
+                           owl:inverseOf astroo:orbitaInSistemaPlanetario ;
+                           rdfs:domain astroo:Sistema_planetario ;
+                           rdfs:range [ owl:intersectionOf ( astroo:Corpo_celeste
+                                                             [ rdf:type owl:Class ;
+                                                               owl:complementOf astroo:Pianeta_interstellare
+                                                             ]
+                                                             [ rdf:type owl:Class ;
+                                                               owl:complementOf astroo:Stella
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                           rdfs:comment "Relazione che definisce gli altri corpi celesti, ad eccezione delle stelle e pianeti, che formano un sistema planetario."@it ;
+                           rdfs:label "formatoDaAltriCorpi"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#illuminaPianeta
+astroo:illuminaPianeta rdf:type owl:ObjectProperty ;
+                       rdfs:comment "Relazione che esprime quando una stella illumina direttamente un pianeta."@it ;
+                       rdfs:label "illuminaPianeta"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#insiemeDiStelle
+astroo:insiemeDiStelle rdf:type owl:ObjectProperty ;
+                       rdfs:domain astroo:Sistema_stellare ;
+                       rdfs:range astroo:Stella ;
+                       rdfs:comment "Relazione che definisce le stelle facenti parte di un sistema stellare."@it ;
+                       rdfs:label "insiemeDiStelle"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#orbitaAttornoPianeta
+astroo:orbitaAttornoPianeta rdf:type owl:ObjectProperty ;
+                            rdfs:domain astroo:Satellite_naturale ;
+                            rdfs:range astroo:Pianeta ;
+                            rdfs:comment "Relazione che definisce il pianeta attorno a cui un satellite orbita."@it ;
+                            rdfs:label "orbitaAttornoPianeta"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#orbitaAttornoStella
+astroo:orbitaAttornoStella rdf:type owl:ObjectProperty ;
+                           rdfs:domain astroo:Pianeta_non_interstellare ;
+                           rdfs:range astroo:Stella ;
+                           rdfs:comment "Relazione che definisce attorno a quale stella orbita un pianeta."@it ;
+                           rdfs:label "orbitaAttornoStella"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#orbitaInSistemaPlanetario
+astroo:orbitaInSistemaPlanetario rdf:type owl:ObjectProperty ;
+                                 rdfs:domain [ owl:intersectionOf ( astroo:Corpo_celeste
+                                                                    [ rdf:type owl:Class ;
+                                                                      owl:complementOf astroo:Pianeta_interstellare
+                                                                    ]
+                                                                    [ rdf:type owl:Class ;
+                                                                      owl:complementOf astroo:Stella
+                                                                    ]
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                                 rdfs:range astroo:Sistema_planetario ;
+                                 rdfs:comment "Relazione che definisce in quale sistema planetario i corpi celesti, ad eccezione del centro di gravità, orbinato."@it ;
+                                 rdfs:label "orbitaInSistemaPlanetario"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#orbitaNeiDintorniDi
+astroo:orbitaNeiDintorniDi rdf:type owl:ObjectProperty ,
+                                    owl:TransitiveProperty ;
+                           rdfs:domain astroo:Corpo_celeste_non_sferoidale ;
+                           rdfs:range astroo:Corpo_celeste ;
+                           rdfs:comment "Relazione che esprime nei dintorni di quale corpo celeste i corpi non sferoidali orbitano."@it ;
+                           rdfs:label "orbitaNeiDintorniDi"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#raggrupa
+astroo:raggrupa rdf:type owl:ObjectProperty ;
+                owl:inverseOf astroo:situatoIn ;
+                rdfs:domain astroo:Galassia ;
+                rdfs:range astroo:Sistema ;
+                rdfs:comment "Relazione che definisce la galassia come raggruppamento di sistemi."@it ;
+                rdfs:label "raggruppa"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#satelliteInSistema
+astroo:satelliteInSistema rdf:type owl:ObjectProperty ;
+                          rdfs:comment "Relazione che esprime la presenza del satellite in un sistema."@it ;
+                          rdfs:label "satelliteInSistema"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#situatoIn
+astroo:situatoIn rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain astroo:Sistema ;
+                 rdfs:range astroo:Galassia ;
+                 rdfs:comment "Relazione che definisce in quale galassia un sistema è situato."@it ;
+                 rdfs:label "situatoIn"@it .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/AstronomyOntology#composizionePianeta
+astroo:composizionePianeta rdf:type owl:DatatypeProperty ;
+                           rdfs:domain astroo:Pianeta ;
+                           rdfs:range [ rdf:type rdfs:Datatype ;
+                                        owl:oneOf [ rdf:type rdf:List ;
+                                                    rdf:first "Gassosa" ;
+                                                    rdf:rest [ rdf:type rdf:List ;
+                                                               rdf:first "Rocciosa" ;
+                                                               rdf:rest rdf:nil
+                                                             ]
+                                                  ]
+                                      ] ;
+                           rdfs:comment "Proprietà che esprime quale tipo di materia compone la maggior parte della massa di un pianeta."@it ;
+                           rdfs:label "composizione pianeta"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#distanzaDalSole
+astroo:distanzaDalSole rdf:type owl:DatatypeProperty ;
+                       rdfs:domain astroo:Oggetto_astronomico ;
+                       rdfs:range xsd:float ;
+                       rdfs:comment "Proprietà che descrive la distanza di un oggeto dal Sole in \"anni luce\"."@it ;
+                       rdfs:label "distanza dal sole"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#emetteLuce
+astroo:emetteLuce rdf:type owl:DatatypeProperty ;
+                  rdfs:domain astroo:Corpo_celeste ;
+                  rdfs:range xsd:boolean ;
+                  rdfs:comment "Proprietà che esprime se un corpo celeste emtte luce propria o no."@it ;
+                  rdfs:label "emette luce"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#formaSferoidale
+astroo:formaSferoidale rdf:type owl:DatatypeProperty ;
+                       rdfs:domain astroo:Corpo_celeste ;
+                       rdfs:range xsd:boolean ;
+                       rdfs:comment "Proprietà che descrive la forma di un corpo celeste."@it ;
+                       rdfs:label "forma sferoidale"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#haOrbita
+astroo:haOrbita rdf:type owl:DatatypeProperty ;
+                rdfs:domain astroo:Pianeta ;
+                rdfs:range [ rdf:type rdfs:Datatype ;
+                             owl:oneOf [ rdf:type rdf:List ;
+                                         rdf:first "Inesistente" ;
+                                         rdf:rest [ rdf:type rdf:List ;
+                                                    rdf:first "Libera" ;
+                                                    rdf:rest [ rdf:type rdf:List ;
+                                                               rdf:first "Non libera" ;
+                                                               rdf:rest rdf:nil
+                                                             ]
+                                                  ]
+                                       ]
+                           ] ;
+                rdfs:comment "Proprietà che esprime lo stato dell'orbita di un pianeta."@it ;
+                rdfs:label "ha orbita"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#nome
+astroo:nome rdf:type owl:DatatypeProperty ;
+            rdfs:domain astroo:Oggetto_astronomico ;
+            rdfs:range xsd:string ;
+            rdfs:comment "Proprietà che esprime il nome di un oggetto astronomico."@it ;
+            rdfs:label "nome"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#stadioVitale
+astroo:stadioVitale rdf:type owl:DatatypeProperty ;
+                    rdfs:domain astroo:Stella ;
+                    rdfs:range [ rdf:type rdfs:Datatype ;
+                                 owl:oneOf [ rdf:type rdf:List ;
+                                             rdf:first "Degenere" ;
+                                             rdf:rest [ rdf:type rdf:List ;
+                                                        rdf:first "Stabile" ;
+                                                        rdf:rest rdf:nil
+                                                      ]
+                                           ]
+                               ] ;
+                    rdfs:comment "Proprietà che esprime in quale stadio vitale si trova una stella."@it ;
+                    rdfs:label "stadio vitale"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#temperatura
+astroo:temperatura rdf:type owl:DatatypeProperty ;
+                   rdfs:domain astroo:Stella ;
+                   rdfs:range xsd:double ;
+                   rdfs:comment "Proprietà che esprime la temperatura superficiale di una stella in Kelvin."@it ;
+                   rdfs:label "temperatura superficiale"@it .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/AstronomyOntology#Classe_A
+astroo:Classe_A rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Stella
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:temperatura ;
+                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:double ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive "7500.0"^^xsd:double
+                                                                                                         ]
+                                                                                                         [ xsd:maxExclusive "10000.0"^^xsd:double
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:comment "Classe che raggruppa le stelle mature classificate nella classe A secondo la classificazione di Harvard"@it ;
+                rdfs:label "Stella bianca (A)"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Classe_B
+astroo:Classe_B rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Stella
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:temperatura ;
+                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:double ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive "10000.0"^^xsd:double
+                                                                                                         ]
+                                                                                                         [ xsd:maxExclusive "33000.0"^^xsd:double
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:comment "Classe che raggruppa le stelle mature classificate nella classe B secondo la classificazione di Harvard."@it ;
+                rdfs:label "Stella azzurra (B)"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Classe_F
+astroo:Classe_F rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Stella
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:temperatura ;
+                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:double ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive "6000.0"^^xsd:double
+                                                                                                         ]
+                                                                                                         [ xsd:maxExclusive "7500.0"^^xsd:double
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:comment "Classe che raggruppa le stelle mature classificate nella classe F secondo la classificazione di Harvard"@it ;
+                rdfs:label "Stella bianco-gialla (F)"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Classe_G
+astroo:Classe_G rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Stella
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:temperatura ;
+                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:double ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive "5200.0"^^xsd:double
+                                                                                                         ]
+                                                                                                         [ xsd:maxExclusive "6000.0"^^xsd:double
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:comment "Classe che raggruppa le stelle mature classificate nella classe G secondo la classificazione di Harvard."@it ;
+                rdfs:label "Stella gialla (G)"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Classe_K
+astroo:Classe_K rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Stella
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:temperatura ;
+                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:double ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive "3700.0"^^xsd:double
+                                                                                                         ]
+                                                                                                         [ xsd:maxExclusive "5200.0"^^xsd:double
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf astroo:Stella ;
+                rdfs:comment "Classe che raggruppa le stelle mature classificate nella classe K secondo la classificazione di Harvard."@it ;
+                rdfs:label "Stella arancione (K)"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Classe_M
+astroo:Classe_M rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Stella
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:temperatura ;
+                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:double ;
+                                                                                  owl:withRestrictions ( [ xsd:maxExclusive "3700.0"^^xsd:double
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf astroo:Stella ;
+                rdfs:comment "Classe che raggruppa le stelle mature classificate nella classe M secondo la classificazione di Harvard."@it ;
+                rdfs:label "Stella rossa (M)"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Classe_O
+astroo:Classe_O rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Stella
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:temperatura ;
+                                                             owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                  owl:onDatatype xsd:double ;
+                                                                                  owl:withRestrictions ( [ xsd:minInclusive "33000.0"^^xsd:double
+                                                                                                         ]
+                                                                                                       )
+                                                                                ]
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf astroo:Stella ;
+                rdfs:comment "Classe che raggruppa le stelle mature classificate nella classe O secondo la classificazione di Harvard."@it ;
+                rdfs:label "Stella blu (O)"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Corpo_celeste
+astroo:Corpo_celeste rdf:type owl:Class ;
+                     rdfs:subClassOf astroo:Oggetto_astronomico ;
+                     owl:disjointWith astroo:Oggetto_celeste ,
+                                      astroo:Sistema ;
+                     rdfs:comment "Classe che identifica i corpi celesti intesi come strutture unitarie e coesive tenute assieme dalla forza di gravità"@it ;
+                     rdfs:label "Corpo celeste"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Corpo_celeste_non_sferoidale
+astroo:Corpo_celeste_non_sferoidale rdf:type owl:Class ;
+                                    rdfs:subClassOf astroo:Corpo_celeste ;
+                                    rdfs:comment "Classe che raggruppa i corpi celesti non sferoidali."@it ;
+                                    rdfs:label "Corpo celeste non sferoidale"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Costellazione
+astroo:Costellazione rdf:type owl:Class ;
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:oneOf ( astroo:Acquario
+                                                       astroo:Ariete
+                                                       astroo:Bilancia
+                                                       astroo:Cancro
+                                                       astroo:Capricorno
+                                                       astroo:Gemelli
+                                                       astroo:Leone
+                                                       astroo:Pesci
+                                                       astroo:Sagittario
+                                                       astroo:Scorpione
+                                                       astroo:Toro
+                                                       astroo:Vergine
+                                                     )
+                                         ] ;
+                     rdfs:subClassOf <http://www.ontologydesignpatterns.org/cp/owl/list.owl#ListItem> ;
+                     rdfs:comment "Classe che identifica le costellazioni intese come suddivisioni della sfera celeste."@it ;
+                     rdfs:label "Costellazione"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Degenere
+astroo:Degenere rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Stella
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:stadioVitale ;
+                                                             owl:hasValue "Degenere"
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf astroo:Stella ;
+                rdfs:comment "Classe che identifica le stelle degeneri intese come stelle giunte allo stadio finale del proprio ciclo di vita."@it ;
+                rdfs:label "Stella degenere"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Galassia
+astroo:Galassia rdf:type owl:Class ;
+                owl:equivalentClass [ owl:intersectionOf ( astroo:Oggetto_celeste
+                                                           [ rdf:type owl:Restriction ;
+                                                             owl:onProperty astroo:raggrupa ;
+                                                             owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                                             owl:onClass astroo:Sistema
+                                                           ]
+                                                         ) ;
+                                      rdf:type owl:Class
+                                    ] ;
+                rdfs:subClassOf astroo:Oggetto_celeste ;
+                owl:disjointWith astroo:Oggetto_astronomico_intra_solare ,
+                                 astroo:Sistema ;
+                rdfs:comment "Classe che identifica le galasse intese come grandi insiemi di sistemi, gas e polveri."@it ;
+                rdfs:label "Galassia"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Nana_bianca
+astroo:Nana_bianca rdf:type owl:Class ;
+                   rdfs:subClassOf astroo:Degenere ;
+                   rdfs:comment "Classe che raggruppa le stelle nane bianche."@it ;
+                   rdfs:label "Nana bianca"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Oggetto_astronomico
+astroo:Oggetto_astronomico rdf:type owl:Class ;
+                           owl:equivalentClass dbo:CelestialBody ;
+                           rdfs:comment "Classe che identifica gli oggetti astronomici quali entità fisiche naturali la cui esistenza dell'universo osservabile è stata appurata."@it ;
+                           rdfs:label "Oggetto astronomico"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Oggetto_astronomico_extra_solare
+astroo:Oggetto_astronomico_extra_solare rdf:type owl:Class ;
+                                        owl:equivalentClass <https://www.wikidata.org/wiki/Q249389> ,
+                                                            [ owl:intersectionOf ( [ rdf:type owl:Class ;
+                                                                                     owl:unionOf ( astroo:Corpo_celeste
+                                                                                                   astroo:Oggetto_celeste
+                                                                                                 )
+                                                                                   ]
+                                                                                   [ rdf:type owl:Restriction ;
+                                                                                     owl:onProperty astroo:distanzaDalSole ;
+                                                                                     owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                                          owl:onDatatype xsd:float ;
+                                                                                                          owl:withRestrictions ( [ xsd:minExclusive "1.5"^^xsd:float
+                                                                                                                                 ]
+                                                                                                                               )
+                                                                                                        ]
+                                                                                   ]
+                                                                                 ) ;
+                                                              rdf:type owl:Class
+                                                            ] ;
+                                        rdfs:subClassOf astroo:Oggetto_astronomico ;
+                                        owl:disjointWith astroo:Oggetto_astronomico_intra_solare ;
+                                        rdfs:comment "Classe che identifica gli oggetti astronomici extra solari intesi come oggetti astronomici che si trovano ad una distanza maggiore di 1.5 anni luce dal Sole"@it ;
+                                        rdfs:label "Oggetto astronomico extra solare"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Oggetto_astronomico_intra_solare
+astroo:Oggetto_astronomico_intra_solare rdf:type owl:Class ;
+                                        owl:equivalentClass [ owl:intersectionOf ( astroo:Corpo_celeste
+                                                                                   [ rdf:type owl:Restriction ;
+                                                                                     owl:onProperty astroo:distanzaDalSole ;
+                                                                                     owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                                                          owl:onDatatype xsd:float ;
+                                                                                                          owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float
+                                                                                                                                 ]
+                                                                                                                                 [ xsd:maxInclusive "1.5"^^xsd:float
+                                                                                                                                 ]
+                                                                                                                               )
+                                                                                                        ]
+                                                                                   ]
+                                                                                 ) ;
+                                                              rdf:type owl:Class
+                                                            ] ;
+                                        rdfs:subClassOf astroo:Oggetto_astronomico ;
+                                        rdfs:comment "Classe che identifica gli oggetti astronomici extra solari intesi come oggetti astronomici che si trovano ad una distanza minore di 1.5 anni luce dal Sole"@it ;
+                                        rdfs:label "Oggetto astronomico intra solare"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Oggetto_celeste
+astroo:Oggetto_celeste rdf:type owl:Class ;
+                       rdfs:subClassOf astroo:Oggetto_astronomico ;
+                       owl:disjointWith astroo:Pianeta ;
+                       rdfs:comment "Classe che identifica gli oggetti celesti intesi come strutture non unitarie tenute insieme dalla forza di gravità"@it ;
+                       rdfs:label "Oggetto celeste"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Pianeta
+astroo:Pianeta rdf:type owl:Class ;
+               owl:equivalentClass [ owl:intersectionOf ( astroo:Corpo_celeste
+                                                          [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty astroo:emetteLuce ;
+                                                                                   owl:hasValue "false"^^xsd:boolean
+                                                                                 ]
+                                                                                 [ rdf:type owl:Restriction ;
+                                                                                   owl:onProperty astroo:formaSferoidale ;
+                                                                                   owl:hasValue "true"^^xsd:boolean
+                                                                                 ]
+                                                                               ) ;
+                                                            rdf:type owl:Class
+                                                          ]
+                                                        ) ;
+                                     rdf:type owl:Class
+                                   ] ;
+               rdfs:subClassOf astroo:Corpo_celeste ;
+               owl:disjointWith astroo:Stella ;
+               rdfs:comment "Classe che identifica i pianeti intesi come corpi celesti che non producono energia e con abbastanza attrazione gravitazionale da far orbitare dei satelliti naturali attorno ad esso."@it ;
+               rdfs:label "Pianeta"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Pianeta_gassoso
+astroo:Pianeta_gassoso rdf:type owl:Class ;
+                       owl:equivalentClass [ owl:intersectionOf ( astroo:Pianeta
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty astroo:composizionePianeta ;
+                                                                    owl:hasValue "Gassosa"
+                                                                  ]
+                                                                ) ;
+                                             rdf:type owl:Class
+                                           ] ;
+                       rdfs:subClassOf astroo:Pianeta ;
+                       owl:disjointWith astroo:Pianeta_roccioso ;
+                       rdfs:comment "Classe che identifica i pianeti gassosi intesi come pianeti composti non prevalentemente da roccia"@it ;
+                       rdfs:label "Pianeta gassoso"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Pianeta_interstellare
+astroo:Pianeta_interstellare rdf:type owl:Class ;
+                             owl:equivalentClass [ owl:intersectionOf ( astroo:Pianeta
+                                                                        [ rdf:type owl:Restriction ;
+                                                                          owl:onProperty astroo:haOrbita ;
+                                                                          owl:hasValue "Inesistente"
+                                                                        ]
+                                                                      ) ;
+                                                   rdf:type owl:Class
+                                                 ] ;
+                             rdfs:subClassOf astroo:Pianeta ;
+                             owl:disjointWith astroo:Pianeta_nano ,
+                                              astroo:Pianeta_non_interstellare ;
+                             rdfs:comment "Classe che identifica i pianeti interstellari intesi come pianeti non legati gravitazionalmente ad una stella"@it ;
+                             rdfs:label "Pianeta interstellare"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Pianeta_nano
+astroo:Pianeta_nano rdf:type owl:Class ;
+                    owl:equivalentClass [ owl:intersectionOf ( astroo:Pianeta
+                                                               [ rdf:type owl:Restriction ;
+                                                                 owl:onProperty astroo:haOrbita ;
+                                                                 owl:hasValue "Non libera"
+                                                               ]
+                                                             ) ;
+                                          rdf:type owl:Class
+                                        ] ;
+                    rdfs:subClassOf astroo:Pianeta ;
+                    rdfs:comment "Classe che identifica i pianeti nani intesi come pianeti di dimensioni sufficienti per avere forma sferoidale, ma la cui orbita non è libera da altri corpi celesti"@it ;
+                    rdfs:label "Pianeta nano"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Pianeta_non_interstellare
+astroo:Pianeta_non_interstellare rdf:type owl:Class ;
+                                 owl:equivalentClass [ owl:intersectionOf ( astroo:Pianeta
+                                                                            [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty astroo:orbitaAttornoStella ;
+                                                                                                     owl:someValuesFrom astroo:Stella
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty astroo:haOrbita ;
+                                                                                                     owl:hasValue "Libera"
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                          ) ;
+                                                       rdf:type owl:Class
+                                                     ] ;
+                                 rdfs:subClassOf astroo:Pianeta ;
+                                 rdfs:comment "Classe che identifica i pianeti non interstellari intesi come pianeti legati gravitazionalente ad una o più stelle ed appartenenti ad un sistema planetario."@it ;
+                                 rdfs:label "Pianeta non interstellare"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Pianeta_roccioso
+astroo:Pianeta_roccioso rdf:type owl:Class ;
+                        owl:equivalentClass [ owl:intersectionOf ( astroo:Pianeta
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty astroo:composizionePianeta ;
+                                                                     owl:hasValue "Rocciosa"
+                                                                   ]
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                        rdfs:subClassOf astroo:Pianeta ;
+                        rdfs:comment "Classe che identifica i pianeti rocciosi intesi come pianeti composti perlopiù da roccia e metalli"@it ;
+                        rdfs:label "Pianeta roccioso"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Satellite_naturale
+astroo:Satellite_naturale rdf:type owl:Class ;
+                          owl:equivalentClass dbo:Satellite ,
+                                              [ rdf:type owl:Class ;
+                                                owl:unionOf ( [ owl:intersectionOf ( astroo:Pianeta
+                                                                                     [ rdf:type owl:Restriction ;
+                                                                                       owl:onProperty astroo:orbitaAttornoPianeta ;
+                                                                                       owl:someValuesFrom astroo:Pianeta
+                                                                                     ]
+                                                                                   ) ;
+                                                                rdf:type owl:Class
+                                                              ]
+                                                              [ owl:intersectionOf ( [ owl:intersectionOf ( astroo:Corpo_celeste
+                                                                                                            [ rdf:type owl:Restriction ;
+                                                                                                              owl:onProperty astroo:orbitaAttornoPianeta ;
+                                                                                                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                                              owl:onClass astroo:Pianeta
+                                                                                                            ]
+                                                                                                          ) ;
+                                                                                       rdf:type owl:Class
+                                                                                     ]
+                                                                                     [ rdf:type owl:Restriction ;
+                                                                                       owl:onProperty astroo:emetteLuce ;
+                                                                                       owl:hasValue "false"^^xsd:boolean
+                                                                                     ]
+                                                                                   ) ;
+                                                                rdf:type owl:Class
+                                                              ]
+                                                              [ rdf:type owl:Class ;
+                                                                owl:unionOf ( [ owl:intersectionOf ( astroo:Corpo_celeste_non_sferoidale
+                                                                                                     [ rdf:type owl:Restriction ;
+                                                                                                       owl:onProperty astroo:orbitaNeiDintorniDi ;
+                                                                                                       owl:someValuesFrom astroo:Corpo_celeste_non_sferoidale
+                                                                                                     ]
+                                                                                                   ) ;
+                                                                                rdf:type owl:Class
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty astroo:orbitaNeiDintorniDi ;
+                                                                                owl:someValuesFrom astroo:Pianeta
+                                                                              ]
+                                                                            )
+                                                              ]
+                                                            )
+                                              ] ;
+                          rdfs:subClassOf astroo:Corpo_celeste ;
+                          owl:disjointWith astroo:Stella ;
+                          rdfs:comment "Classe che identifica i satelliti naturali intesi come corpi celesti che gravitano attorno ad un pianeta."@it ;
+                          rdfs:label "Satellite naturale"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sfera_celeste
+astroo:Sfera_celeste rdf:type owl:Class ;
+                     rdfs:subClassOf <http://www.ontologydesignpatterns.org/cp/owl/list.owl#List> ;
+                     rdfs:comment "Lista di costellazioni in  cui si può dividere la sfera celeste."@it ;
+                     rdfs:label "Sfera celeste"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sistema
+astroo:Sistema rdf:type owl:Class ;
+               rdfs:subClassOf astroo:Oggetto_celeste ;
+               rdfs:comment "Classe che identifica i sistemi intesi come gruppi di corpi celesti che orbitano attorno ad un centro di massa comune"@it ;
+               rdfs:label "Sistema"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sistema_planetario
+astroo:Sistema_planetario rdf:type owl:Class ;
+                          owl:equivalentClass <https://www.wikidata.org/wiki/Q206717> ,
+                                              [ owl:intersectionOf ( astroo:Sistema
+                                                                     [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                              owl:onProperty astroo:formatoAttornoA ;
+                                                                                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                              owl:onClass astroo:Stella
+                                                                                            ]
+                                                                                            [ rdf:type owl:Restriction ;
+                                                                                              owl:onProperty astroo:formatoDaAltriCorpi ;
+                                                                                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                                              owl:onClass astroo:Pianeta_non_interstellare
+                                                                                            ]
+                                                                                          ) ;
+                                                                       rdf:type owl:Class
+                                                                     ]
+                                                                   ) ;
+                                                rdf:type owl:Class
+                                              ] ;
+                          rdfs:subClassOf astroo:Sistema ;
+                          rdfs:comment "Classe che identifica i sistemi planetari intesi come sistemi aventi almeno una stella come centro di massa ed almeno un pianeta gravitante attorno ad essa."@it ;
+                          rdfs:label "Sistema planetario"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sistema_stellare
+astroo:Sistema_stellare rdf:type owl:Class ;
+                        owl:equivalentClass [ owl:intersectionOf ( astroo:Sistema
+                                                                   [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                            owl:onProperty astroo:insiemeDiStelle ;
+                                                                                            owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                                                                            owl:onClass astroo:Stella
+                                                                                          ]
+                                                                                          [ rdf:type owl:Restriction ;
+                                                                                            owl:onProperty astroo:insiemeDiStelle ;
+                                                                                            owl:maxQualifiedCardinality "15"^^xsd:nonNegativeInteger ;
+                                                                                            owl:onClass astroo:Stella
+                                                                                          ]
+                                                                                        ) ;
+                                                                     rdf:type owl:Class
+                                                                   ]
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                        rdfs:subClassOf astroo:Sistema ;
+                        rdfs:comment "Classe che identifica i sistemi stellari intesi come gruppi di stelle che orbitano attorno ad un centro di massa comune"@it ;
+                        rdfs:label "Sistema stellare"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Stella
+astroo:Stella rdf:type owl:Class ;
+              owl:equivalentClass dbo:Star ,
+                                  [ owl:intersectionOf ( astroo:Corpo_celeste
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty astroo:emetteLuce ;
+                                                           owl:hasValue "true"^^xsd:boolean
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] ;
+              rdfs:subClassOf astroo:Corpo_celeste ;
+              rdfs:comment "Classe che identifica una stella come corpo celeste che emette luce propria."@it ;
+              rdfs:label "Stella"@it .
+
+
+###  https://dbpedia.org/ontology/CelestialBody
+dbo:CelestialBody rdf:type owl:Class ;
+                  rdfs:comment "Classe che identifica gli oggetti astronomici quali entità fisiche naturali la cui esistenza dell'universo osservabile è stata appurata-"@it ;
+                  rdfs:isDefinedBy dbo:CelestialBody ;
+                  rdfs:label "dbo:CelestialBody"@en .
+
+
+###  https://dbpedia.org/ontology/Galaxy
+dbo:Galaxy rdf:type owl:Class ;
+           rdfs:subClassOf astroo:Oggetto_celeste ;
+           rdfs:comment "Classe che identifica le galasse intese come grandi insiemi di sistemi, gas e polveri."@it ;
+           rdfs:isDefinedBy "https://dbpedia.org/ontology/Galaxy"@en ;
+           rdfs:label "dbo:Galaxy"@en .
+
+
+###  https://dbpedia.org/ontology/Planet
+dbo:Planet rdf:type owl:Class ;
+           rdfs:subClassOf astroo:Corpo_celeste ;
+           rdfs:comment "Classe che identifica i pianeti intesi come corpi celesti che non producono energia e con abbastanza attrazione gravitazionale da far orbitare dei satelliti naturali attorno ad esso."@it ;
+           rdfs:isDefinedBy "https://dbpedia.org/ontology/Planet"@en ;
+           rdfs:label "dbo:Planet"@en .
+
+
+###  https://dbpedia.org/ontology/Satellite
+dbo:Satellite rdf:type owl:Class ;
+              rdfs:subClassOf astroo:Corpo_celeste ;
+              rdfs:comment "Classe che identifica i satelliti naturali intesi come corpi celesti che gravitano attorno ad un pianeta."@it ;
+              rdfs:isDefinedBy "https://dbpedia.org/ontology/Satellite"@en ;
+              rdfs:label "dbo:Satellite"@en .
+
+
+###  https://dbpedia.org/ontology/Star
+dbo:Star rdf:type owl:Class ;
+         rdfs:subClassOf astroo:Corpo_celeste ;
+         rdfs:comment "Classe che identifica una stella come corpo celeste che emette luce propria."@it ;
+         rdfs:isDefinedBy "https://dbpedia.org/ontology/Star"@en ;
+         rdfs:label "dbo:Star"@en .
+
+
+###  https://www.wikidata.org/wiki/Q206717
+<https://www.wikidata.org/wiki/Q206717> rdf:type owl:Class ;
+                                        rdfs:subClassOf astroo:Sistema ;
+                                        rdfs:comment "Classe che identifica i sistemi planetari intesi come sistemi aventi almeno una stella come centro di massa ed almeno un pianeta gravitante attorno ad essa."@it ;
+                                        rdfs:isDefinedBy "https://www.wikidata.org/wiki/Q206717"@en ;
+                                        rdfs:label "wd:Planetary System"@en .
+
+
+###  https://www.wikidata.org/wiki/Q249389
+<https://www.wikidata.org/wiki/Q249389> rdf:type owl:Class ;
+                                        rdfs:subClassOf astroo:Oggetto_astronomico ;
+                                        rdfs:comment "Classe che identifica gli oggetti astronomici extra solari intesi come oggetti astronomici che si trovano ad una distanza maggiore di 1.5 anni luce dal Sole."@it ;
+                                        rdfs:isDefinedBy "https://www.wikidata.org/wiki/Q249389"@en ;
+                                        rdfs:label "wd:Deep-sky Object"@en .
+
+
+###  https://www.wikidata.org/wiki/Q634
+<https://www.wikidata.org/wiki/Q634> rdf:type owl:Class ;
+                                     rdfs:subClassOf astroo:Corpo_celeste ;
+                                     rdfs:comment "Classe che identifica i pianeti intesi come corpi celesti che non producono energia e con abbastanza attrazione gravitazionale da far orbitare dei satelliti naturali attorno ad esso."@it ;
+                                     rdfs:isDefinedBy "https://www.wikidata.org/wiki/Q634"@en ;
+                                     rdfs:label "wd:Planet"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/AstronomyOntology#Acquario
+astroo:Acquario rdf:type owl:NamedIndividual ;
+                <http://www.ontologydesignpatterns.org/cp/owl/list.owl#firstItemOf> astroo:SferaCeleste ;
+                astroo:nome "Acquario" ;
+                rdfs:comment "Individuo che rappresenta la costellazione dell'acquario"@it ;
+                rdfs:label "Acquario"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Andromeda
+astroo:Andromeda rdf:type owl:NamedIndividual ;
+                 astroo:distanzaDalSole "2500000.0"^^xsd:float ;
+                 astroo:nome "Andromeda" ;
+                 rdfs:comment "Individuo che rappresenta la galassia di Andromeda."@it ;
+                 rdfs:label "Andromeda"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Andromeda_Alpha
+astroo:Andromeda_Alpha rdf:type owl:NamedIndividual ,
+                                astroo:Sistema_stellare ;
+                       astroo:situatoIn astroo:Andromeda ;
+                       astroo:distanzaDalSole "2500000.0"^^xsd:float ;
+                       astroo:nome "Andromeda Alpha" ;
+                       rdfs:comment "Andromeda Alpha"@it ;
+                       rdfs:label "Andromeda Alpha"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Andromeda_Beta
+astroo:Andromeda_Beta rdf:type owl:NamedIndividual ,
+                               astroo:Sistema_stellare ;
+                      astroo:situatoIn astroo:Andromeda ;
+                      astroo:distanzaDalSole "2500000.0"^^xsd:float ;
+                      astroo:nome "Andromeda Beta" ;
+                      rdfs:comment "Andromeda Beta"@it ;
+                      rdfs:label "Andromeda Beta"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Ariete
+astroo:Ariete rdf:type owl:NamedIndividual ;
+              <http://www.ontologydesignpatterns.org/cp/owl/collectionentity.owl#isMemberOf> astroo:SferaCeleste ;
+              astroo:nome "Ariete" ;
+              <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> astroo:Acquario ;
+              rdfs:comment "Individuo che rappresenta la costellazione dell'ariete."@it ;
+              rdfs:label "Ariete"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Bilancia
+astroo:Bilancia rdf:type owl:NamedIndividual ;
+                <http://www.ontologydesignpatterns.org/cp/owl/collectionentity.owl#isMemberOf> astroo:SferaCeleste ;
+                <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> astroo:Cancro ;
+                astroo:nome "Bilacia" ;
+                <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> astroo:Ariete ;
+                rdfs:comment "Individuo che rappresenta la costellazione della bilancia.."@it ;
+                rdfs:label "Bilancia"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Cancro
+astroo:Cancro rdf:type owl:NamedIndividual ;
+              astroo:nome "Cancro" ;
+              rdfs:comment "Individuo che rappresenta la costellazione del Cancro."@it ;
+              rdfs:label "Cancro"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Capricorno
+astroo:Capricorno rdf:type owl:NamedIndividual ;
+                  <http://www.ontologydesignpatterns.org/cp/owl/collectionentity.owl#isMemberOf> astroo:SferaCeleste ;
+                  <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> astroo:Gemelli ;
+                  astroo:nome "Capricorno" ;
+                  <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> astroo:Cancro ;
+                  rdfs:comment "Individuo che rappresenta la costellazione del Capricorno."@it ;
+                  rdfs:label "Capricorno"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Ceres
+astroo:Ceres rdf:type owl:NamedIndividual ;
+             astroo:orbitaAttornoStella astroo:Sole ;
+             astroo:distanzaDalSole "2.0E-5"^^xsd:float ;
+             astroo:emetteLuce "false"^^xsd:boolean ;
+             astroo:formaSferoidale "true"^^xsd:boolean ;
+             astroo:haOrbita "Non libera" ;
+             astroo:nome "Ceres" ;
+             rdfs:comment "Individuo che identifica il pianeta nano Ceres."@it ;
+             rdfs:label "Ceres"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Crab_Pulsar
+astroo:Crab_Pulsar rdf:type owl:NamedIndividual ;
+                   astroo:distanzaDalSole "6500.0"^^xsd:float ;
+                   astroo:emetteLuce "true"^^xsd:boolean ;
+                   astroo:stadioVitale "Degenere" ;
+                   rdfs:comment "Individuo che rappresenta la stella di neutroni individuata nella nebulosa del granchio."@it ;
+                   rdfs:label "Crab Pulsar"@en .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Dactyl
+astroo:Dactyl rdf:type owl:NamedIndividual ;
+              astroo:orbitaInSistemaPlanetario astroo:Sistema_solare ;
+              astroo:orbitaNeiDintorniDi astroo:Ida ;
+              astroo:distanzaDalSole "2.0E-5"^^xsd:float ;
+              astroo:emetteLuce "false"^^xsd:boolean ;
+              astroo:formaSferoidale "false"^^xsd:boolean ;
+              astroo:nome "Dactyl" ;
+              rdfs:comment "Individuo che rappresenta l'asteroide Dactyl."@it ;
+              rdfs:label "Dactyl"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Epsilon_Carinae_A
+astroo:Epsilon_Carinae_A rdf:type owl:NamedIndividual ;
+                         astroo:formaSistemaStellare astroo:Sistema_Epsilon_Carinae ;
+                         astroo:distanzaDalSole "610.0"^^xsd:float ;
+                         astroo:emetteLuce "true"^^xsd:boolean ;
+                         astroo:formaSferoidale "true"^^xsd:boolean ;
+                         astroo:nome "Epsilon Carinae A" ;
+                         astroo:stadioVitale "Stabile" ;
+                         astroo:temperatura "3523.0"^^xsd:double ;
+                         rdfs:comment "Individuo che rappresenta la stella Epsilon Carinae A."@it ;
+                         rdfs:label "Epsilon Carinae A"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Epsilon_Carinae_B
+astroo:Epsilon_Carinae_B rdf:type owl:NamedIndividual ;
+                         astroo:formaSistemaStellare astroo:Sistema_Epsilon_Carinae ;
+                         astroo:distanzaDalSole "610.0"^^xsd:float ;
+                         astroo:emetteLuce "true"^^xsd:boolean ;
+                         astroo:formaSferoidale "true"^^xsd:boolean ;
+                         astroo:nome "Epsilon Carinae B" ;
+                         astroo:stadioVitale "Stabile" ;
+                         astroo:temperatura "20417.0"^^xsd:double ;
+                         rdfs:comment "Individuo che rappresenta la stella Epsilon Carinae B."@it ;
+                         rdfs:label "Epsilon Carinae B"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Epsilon_Eridani
+astroo:Epsilon_Eridani rdf:type owl:NamedIndividual ;
+                       astroo:distanzaDalSole "10475.0"^^xsd:float ;
+                       astroo:emetteLuce "true"^^xsd:boolean ;
+                       astroo:formaSferoidale "true"^^xsd:boolean ;
+                       astroo:nome "Epsilon Eridani" ;
+                       astroo:stadioVitale "Stabile" ;
+                       astroo:temperatura "5084.0"^^xsd:double ;
+                       rdfs:comment "Individuo che rappresenta la stella Epsilon Eridani."@it ;
+                       rdfs:label "Epsilon Eridani"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Europa
+astroo:Europa rdf:type owl:NamedIndividual ;
+              astroo:composizionePianeta "Rocciosa" ;
+              astroo:distanzaDalSole "8.0E-5"^^xsd:float ;
+              astroo:emetteLuce "false"^^xsd:boolean ;
+              astroo:formaSferoidale "true"^^xsd:boolean ;
+              astroo:nome "Europa" ;
+              rdfs:comment "Individuo che rappresenta il satellite che orbita attorno a Giove chiamato Europa."@it ;
+              rdfs:label "Europa"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Ganymede
+astroo:Ganymede rdf:type owl:NamedIndividual ;
+                astroo:composizionePianeta "Rocciosa" ;
+                astroo:distanzaDalSole "8.0E-5"^^xsd:float ;
+                astroo:emetteLuce "false"^^xsd:boolean ;
+                astroo:formaSferoidale "true"^^xsd:boolean ;
+                astroo:nome "Ganymede" ;
+                rdfs:label "Ganimede"@it ,
+                           "Individuo che rappresenta il satellite che orbita attorno a Giove chiamato Ganymede."@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Gemelli
+astroo:Gemelli rdf:type owl:NamedIndividual ;
+               <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> astroo:Leone ;
+               astroo:nome "Gemelli" ;
+               rdfs:comment "Individuo che rappresenta la costellazione dei Gemelli."@it ;
+               rdfs:label "Gemelli"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Giove
+astroo:Giove rdf:type owl:NamedIndividual ;
+             astroo:faOrbitareSatellite astroo:Europa ,
+                                        astroo:Ganymede ;
+             astroo:orbitaAttornoStella astroo:Sole ;
+             astroo:composizionePianeta "Gassosa" ;
+             astroo:distanzaDalSole "8.0E-5"^^xsd:float ;
+             astroo:formaSferoidale "true"^^xsd:boolean ;
+             astroo:haOrbita "Libera" ;
+             astroo:nome "Giove" ;
+             rdfs:comment "Individuo che rappresenta il pianeta Giove."@it ;
+             rdfs:label "Giove"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Ida
+astroo:Ida rdf:type owl:NamedIndividual ;
+           astroo:orbitaNeiDintorniDi astroo:Sole ;
+           astroo:distanzaDalSole "2.0E-5"^^xsd:float ;
+           astroo:emetteLuce "false"^^xsd:boolean ;
+           astroo:formaSferoidale "false"^^xsd:boolean ;
+           astroo:nome "Ida" ;
+           rdfs:comment "Individuo che rappresenta l'asteroide Ida."@it ;
+           rdfs:label "Ida"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Interamnia
+astroo:Interamnia rdf:type owl:NamedIndividual ;
+                  astroo:orbitaInSistemaPlanetario astroo:Sistema_solare ;
+                  astroo:distanzaDalSole "2.0E-5"^^xsd:float ;
+                  astroo:emetteLuce "false"^^xsd:boolean ;
+                  astroo:formaSferoidale "false"^^xsd:boolean ;
+                  astroo:nome "Interamnia" ;
+                  rdfs:comment "Individuo che rappresenta l'asteroide Intermnia"@it ;
+                  rdfs:label "Interamnia"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Kepler-31
+astroo:Kepler-31 rdf:type owl:NamedIndividual ;
+                 astroo:centroDiGravitàDi astroo:Sistema_Kepler-31 ;
+                 astroo:distanzaDalSole "5700.0"^^xsd:float ;
+                 astroo:emetteLuce "true"^^xsd:boolean ;
+                 astroo:nome "Kepler-31" ;
+                 astroo:stadioVitale "Stabile" ;
+                 astroo:temperatura "6740.0"^^xsd:double ;
+                 rdfs:comment "Individuo che rappresenta la stella Kepler-31"@it ;
+                 rdfs:label "Kepler-31"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Kepler-31B
+astroo:Kepler-31B rdf:type owl:NamedIndividual ;
+                  astroo:orbitaAttornoStella astroo:Kepler-31 ;
+                  astroo:distanzaDalSole "5700.0"^^xsd:float ;
+                  astroo:emetteLuce "false"^^xsd:boolean ;
+                  astroo:formaSferoidale "true"^^xsd:boolean ;
+                  astroo:haOrbita "Libera" ;
+                  astroo:nome "Kepler-31B" ;
+                  rdfs:comment "Individuo che rappresenta il primo pianeta orbitante  attorno a  Kepler-31."@it ;
+                  rdfs:label "Kepler-31B"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Kepler-31C
+astroo:Kepler-31C rdf:type owl:NamedIndividual ;
+                  astroo:orbitaAttornoStella astroo:Kepler-31 ;
+                  astroo:distanzaDalSole "5700.0"^^xsd:float ;
+                  astroo:emetteLuce "false"^^xsd:boolean ;
+                  astroo:formaSferoidale "true"^^xsd:boolean ;
+                  astroo:haOrbita "Libera" ;
+                  astroo:nome "Kepler-31C" ;
+                  rdfs:comment "Individuo che rappresenta il secondo pianeta orbitante attorno a  Kepler-31."@it ;
+                  rdfs:label "Kepler-31C"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Kepler-31D
+astroo:Kepler-31D rdf:type owl:NamedIndividual ;
+                  astroo:orbitaAttornoStella astroo:Kepler-31 ;
+                  astroo:distanzaDalSole "5700.0"^^xsd:float ;
+                  astroo:emetteLuce "false"^^xsd:boolean ;
+                  astroo:formaSferoidale "true"^^xsd:boolean ;
+                  astroo:haOrbita "Libera" ;
+                  astroo:nome "Kepler-31D" ;
+                  rdfs:comment "Individuo che rappresenta il terzo pianeta orbitante attorno a  Kepler-31."@it ;
+                  rdfs:label "Kepler-31D"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Leone
+astroo:Leone rdf:type owl:NamedIndividual ;
+             <http://www.ontologydesignpatterns.org/cp/owl/collectionentity.owl#isMemberOf> astroo:SferaCeleste ;
+             astroo:nome "Leone" ;
+             rdfs:comment "Individuo che rappresenta la costellazione del Leone."@it ;
+             rdfs:label "Leone"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Luna
+astroo:Luna rdf:type owl:NamedIndividual ;
+            astroo:orbitaAttornoPianeta astroo:Terra ;
+            astroo:composizionePianeta "Rocciosa" ;
+            astroo:distanzaDalSole "1.0E-5"^^xsd:float ;
+            astroo:emetteLuce "false"^^xsd:boolean ;
+            astroo:formaSferoidale "true"^^xsd:boolean ;
+            astroo:nome "Luna" ;
+            rdfs:comment "Individuo che rappresenta il satellite Luna."@it ;
+            rdfs:label "Luna"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Marte
+astroo:Marte rdf:type owl:NamedIndividual ;
+             astroo:composizionePianeta "Rocciosa" ;
+             astroo:distanzaDalSole "2.0E-5"^^xsd:float ;
+             astroo:formaSferoidale "true"^^xsd:boolean ;
+             astroo:haOrbita "Libera" ;
+             astroo:nome "Marte" ;
+             rdfs:comment "Individuo che rappresenta il pianeta Marte"@it ;
+             rdfs:label "Marte"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Mercurio
+astroo:Mercurio rdf:type owl:NamedIndividual ;
+                astroo:orbitaAttornoStella astroo:Sole ;
+                astroo:composizionePianeta "Rocciosa" ;
+                astroo:distanzaDalSole "6.0E-6"^^xsd:float ;
+                astroo:formaSferoidale "true"^^xsd:boolean ;
+                astroo:haOrbita "Libera" ;
+                astroo:nome "Mercurio" ;
+                rdfs:comment "Individuo che rappresenta il pianeta Mercurio."@it ;
+                rdfs:label "Mercurio"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Nettuno
+astroo:Nettuno rdf:type owl:NamedIndividual ;
+               astroo:composizionePianeta "Gassosa" ;
+               astroo:distanzaDalSole "4.0E-4"^^xsd:float ;
+               astroo:formaSferoidale "true"^^xsd:boolean ;
+               astroo:haOrbita "Libera" ;
+               astroo:nome "Nettuno" ;
+               rdfs:comment "Individuo che rappresenta il pianeta Nettuno."@it ;
+               rdfs:label "Nettuno"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#OST-44
+astroo:OST-44 rdf:type owl:NamedIndividual ;
+              astroo:composizionePianeta "Gassosa" ;
+              astroo:distanzaDalSole "554.0"^^xsd:float ;
+              astroo:emetteLuce "false"^^xsd:boolean ;
+              astroo:formaSferoidale "true"^^xsd:boolean ;
+              astroo:haOrbita "Inesistente" ;
+              astroo:nome "OST-44" ;
+              rdfs:comment "Individuo che rappresenta il pianeta interstellare OST-44"@it ;
+              rdfs:label "OST-44"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Pesci
+astroo:Pesci rdf:type owl:NamedIndividual ;
+             <http://www.ontologydesignpatterns.org/cp/owl/collectionentity.owl#isMemberOf> astroo:SferaCeleste ;
+             astroo:nome "Pesci" ;
+             <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> astroo:Leone ;
+             rdfs:comment "Individuo che rappresenta la costellazione dei Pesci.."@it ;
+             rdfs:label "Pesci"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Plutone
+astroo:Plutone rdf:type owl:NamedIndividual ;
+               astroo:orbitaAttornoStella astroo:Sole ;
+               astroo:composizionePianeta "Gassosa" ;
+               astroo:distanzaDalSole "7.0E-4"^^xsd:float ;
+               astroo:formaSferoidale "true"^^xsd:boolean ;
+               astroo:haOrbita "Non libera" ;
+               astroo:nome "Plutone" ;
+               rdfs:comment "Individuo che rappresenta il pianeta Plutone."@it ;
+               rdfs:label "Plutone"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Procyon_A
+astroo:Procyon_A rdf:type owl:NamedIndividual ;
+                 astroo:emetteLuce "true"^^xsd:boolean ;
+                 astroo:formaSferoidale "true"^^xsd:boolean ;
+                 astroo:nome "Procyon A" ;
+                 astroo:temperatura "6530.0"^^xsd:double ;
+                 rdfs:comment "Individuo che rappresenta la stella Procyon A appartenente al sistema Porcyon."@it ;
+                 rdfs:label "Procyon A"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Procyon_B
+astroo:Procyon_B rdf:type owl:NamedIndividual ;
+                 astroo:emetteLuce "true"^^xsd:boolean ;
+                 astroo:formaSferoidale "true"^^xsd:boolean ;
+                 astroo:nome "Procyon B" ;
+                 astroo:stadioVitale "Degenere" ;
+                 astroo:temperatura "7740.0"^^xsd:double ;
+                 rdfs:comment "Individuo che rappresenta la stella Procyon B appartenente al sistema Procyon."@it ;
+                 rdfs:label "Procyon B"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Proxima_Centauri
+astroo:Proxima_Centauri rdf:type owl:NamedIndividual ;
+                        astroo:distanzaDalSole "4.2"^^xsd:float ;
+                        astroo:emetteLuce "true"^^xsd:boolean ;
+                        astroo:formaSferoidale "true"^^xsd:boolean ;
+                        astroo:nome "Proxima Centauri" ;
+                        astroo:stadioVitale "Stabile" ;
+                        astroo:temperatura "2992.0"^^xsd:double ;
+                        rdfs:comment "Individuo che rappresenta la stella Proxima Centauri."@it ;
+                        rdfs:label "Proxima Centauri"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sagittario
+astroo:Sagittario rdf:type owl:NamedIndividual ;
+                  astroo:nome "Sagittario" ;
+                  <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> astroo:Pesci ;
+                  rdfs:comment "Individuo che rappresenta la costellazione del Sagittario."@it ;
+                  rdfs:label "Sagittario"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Saturno
+astroo:Saturno rdf:type owl:NamedIndividual ;
+               astroo:composizionePianeta "Gassosa" ;
+               astroo:distanzaDalSole "1.0E-4"^^xsd:float ;
+               astroo:formaSferoidale "true"^^xsd:boolean ;
+               astroo:haOrbita "Libera" ;
+               astroo:nome "Saturno" ;
+               rdfs:comment "Individuo che rappresenta il pianeta Saturno."@it ;
+               rdfs:label "Saturno"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Scorpione
+astroo:Scorpione rdf:type owl:NamedIndividual ;
+                 <http://www.ontologydesignpatterns.org/cp/owl/collectionentity.owl#isMemberOf> astroo:SferaCeleste ;
+                 astroo:nome "Scorpione" ;
+                 <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> astroo:Sagittario ;
+                 rdfs:comment "Individuo che rappresenta la costellazione dello Scorpione."@it ;
+                 rdfs:label "Scorpione"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Scorpius_X-1
+astroo:Scorpius_X-1 rdf:type owl:NamedIndividual ;
+                    astroo:distanzaDalSole "6000.0"^^xsd:float ;
+                    astroo:nome "Scorpius X-1" ;
+                    astroo:stadioVitale "Degenere" ;
+                    rdfs:comment "Individuo che identifica la stella di neutroni Scorpius X-1 individuata nella nebulosa dello Scorpione"@it ;
+                    rdfs:label "Scorpius X-1"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#SferaCeleste
+astroo:SferaCeleste rdf:type owl:NamedIndividual ,
+                             astroo:Sfera_celeste ;
+                    <http://www.ontologydesignpatterns.org/cp/owl/collectionentity.owl#hasMember> astroo:Cancro ,
+                                                                                                  astroo:Gemelli ,
+                                                                                                  astroo:Sagittario ,
+                                                                                                  astroo:Toro ;
+                    astroo:nome "Sfera celeste" ;
+                    rdfs:comment "Individuo che rappresenta la sfera celeste."@it ;
+                    rdfs:label "Sfera celeste"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sigma_Draconis
+astroo:Sigma_Draconis rdf:type owl:NamedIndividual ;
+                      astroo:distanzaDalSole "18800.0"^^xsd:float ;
+                      astroo:emetteLuce "true"^^xsd:boolean ;
+                      astroo:formaSferoidale "true"^^xsd:boolean ;
+                      astroo:nome "Sigma Draconis" ;
+                      astroo:stadioVitale "Stabile" ;
+                      astroo:temperatura "5150.0"^^xsd:double ;
+                      rdfs:comment "Individuo che rappresenta la stella Sigma Draconis."@it ;
+                      rdfs:label "Sigma Draconis"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sirio_A
+astroo:Sirio_A rdf:type owl:NamedIndividual ;
+               astroo:attrae astroo:Sirio_B ;
+               astroo:distanzaDalSole "8.6"^^xsd:float ;
+               astroo:emetteLuce "true"^^xsd:boolean ;
+               astroo:formaSferoidale "true"^^xsd:boolean ;
+               astroo:nome "Sirio A" ;
+               astroo:stadioVitale "Stabile" ;
+               astroo:temperatura "9940.0"^^xsd:double ;
+               rdfs:comment "Individuo che rappresenta la stella Sirio A."@it ;
+               rdfs:label "Sirio A"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sirio_B
+astroo:Sirio_B rdf:type owl:NamedIndividual ;
+               astroo:formaSistemaStellare astroo:Sistema_Sirio ;
+               astroo:distanzaDalSole "8.6"^^xsd:float ;
+               astroo:emetteLuce "true"^^xsd:boolean ;
+               astroo:formaSferoidale "true"^^xsd:boolean ;
+               astroo:nome "Sirio B" ;
+               astroo:stadioVitale "Degenere" ;
+               astroo:temperatura "24000.0"^^xsd:double ;
+               rdfs:comment "Individuo che rappresenta la stella Sirio B."@it ;
+               rdfs:label "Sirio B"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sistema_Epsilon_Carinae
+astroo:Sistema_Epsilon_Carinae rdf:type owl:NamedIndividual ;
+                               astroo:situatoIn astroo:Via_Lattea ;
+                               astroo:distanzaDalSole "610.0"^^xsd:float ;
+                               astroo:nome "Sistema Epsilon Carinae" ;
+                               rdfs:comment "Individuo che rappresenta il sistema Epsilon Carinae."@it ;
+                               rdfs:label "Sistema Epsilon Carinae"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sistema_Kepler-31
+astroo:Sistema_Kepler-31 rdf:type owl:NamedIndividual ;
+                         astroo:situatoIn astroo:Via_Lattea ;
+                         astroo:distanzaDalSole "5700.0"^^xsd:float ;
+                         astroo:nome "Sistema Kepler-31" ;
+                         rdfs:comment "Individuo che rappresenta il sistema planetario attorno a Kepler-31"@it ;
+                         rdfs:label "Sistema Kepler-31"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sistema_Procyon
+astroo:Sistema_Procyon rdf:type owl:NamedIndividual ;
+                       astroo:insiemeDiStelle astroo:Procyon_A ,
+                                              astroo:Procyon_B ;
+                       astroo:distanzaDalSole "11.46"^^xsd:float ;
+                       astroo:nome "Sistema Procyon" ;
+                       rdfs:comment "Individuo che rappresenta il sistema stellare Procyon."@it ;
+                       rdfs:label "Sistema Procyon"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sistema_Sirio
+astroo:Sistema_Sirio rdf:type owl:NamedIndividual ;
+                     astroo:insiemeDiStelle astroo:Sirio_A ;
+                     astroo:distanzaDalSole "8.6"^^xsd:float ;
+                     astroo:nome "Sistema Sirio" ;
+                     rdfs:comment "Individuo che rappresenta il sistema stellare binario Sirio."@it ;
+                     rdfs:label "Sistema Sirio"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sistema_solare
+astroo:Sistema_solare rdf:type owl:NamedIndividual ;
+                      astroo:formatoAttornoA astroo:Sole ;
+                      astroo:formatoDaAltriCorpi astroo:Ida ;
+                      astroo:nome "Sistema Solare" ;
+                      rdfs:comment "Individuo che rappresenta il Sistema solare."@it ;
+                      rdfs:label "Sistema Solare"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Sole
+astroo:Sole rdf:type owl:NamedIndividual ;
+            astroo:centroDiGravitàDi astroo:Sistema_solare ;
+            astroo:faOrbitarePianeta astroo:Marte ,
+                                     astroo:Nettuno ,
+                                     astroo:Saturno ,
+                                     astroo:Venere ;
+            astroo:emetteLuce "true"^^xsd:boolean ;
+            astroo:formaSferoidale "true"^^xsd:boolean ;
+            astroo:nome "Sole" ;
+            astroo:stadioVitale "Stabile" ;
+            astroo:temperatura "5777.0"^^xsd:double ;
+            rdfs:comment "Individuo che rappresenta la stella Sole."@it ;
+            rdfs:label "Sole"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Tau_Ceti
+astroo:Tau_Ceti rdf:type owl:NamedIndividual ;
+                astroo:distanzaDalSole "11912.0"^^xsd:float ;
+                astroo:emetteLuce "true"^^xsd:boolean ;
+                astroo:formaSferoidale "true"^^xsd:boolean ;
+                astroo:nome "Tau Ceti" ;
+                astroo:stadioVitale "Stabile" ;
+                astroo:temperatura "5344.0"^^xsd:double ;
+                rdfs:comment "Individuo che rappresenta la stella Tau Ceti."@it ;
+                rdfs:label "Tau Ceti"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Terra
+astroo:Terra rdf:type owl:NamedIndividual ;
+             astroo:orbitaAttornoStella astroo:Sole ;
+             astroo:composizionePianeta "Rocciosa" ;
+             astroo:distanzaDalSole "1.0E-5"^^xsd:float ;
+             astroo:formaSferoidale "true"^^xsd:boolean ;
+             astroo:haOrbita "Libera" ;
+             astroo:nome "Terra" ;
+             rdfs:comment "Individuo che rappresenta il pianeta Terra."@it ;
+             rdfs:label "Terra"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Toro
+astroo:Toro rdf:type owl:NamedIndividual ;
+            <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyPrecedes> astroo:Vergine ;
+            astroo:nome "Toro" ;
+            <http://www.ontologydesignpatterns.org/cp/owl/sequence.owl#directlyFollows> astroo:Scorpione ;
+            rdfs:comment "Individuo che rappresenta la costellazione del Toro."@it ;
+            rdfs:label "Toro"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Urano
+astroo:Urano rdf:type owl:NamedIndividual ;
+             astroo:orbitaAttornoStella astroo:Sole ;
+             astroo:composizionePianeta "Gassosa" ;
+             astroo:distanzaDalSole "3.0E-4"^^xsd:float ;
+             astroo:formaSferoidale "true"^^xsd:boolean ;
+             astroo:haOrbita "Libera" ;
+             astroo:nome "Urano" ;
+             rdfs:comment "Individuo che rappresenta il pianeta Urano"@it ;
+             rdfs:label "Urano"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Venere
+astroo:Venere rdf:type owl:NamedIndividual ;
+              astroo:composizionePianeta "Rocciosa" ;
+              astroo:distanzaDalSole "1.0E-5"^^xsd:float ;
+              astroo:formaSferoidale "true"^^xsd:boolean ;
+              astroo:haOrbita "Libera" ;
+              astroo:nome "Venere" ;
+              rdfs:comment "Individuo che rappresenta il pianeta Venere."@it ;
+              rdfs:label "Venere"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Vergine
+astroo:Vergine rdf:type owl:NamedIndividual ;
+               <http://www.ontologydesignpatterns.org/cp/owl/list.owl#lastItemOf> astroo:SferaCeleste ;
+               astroo:nome "Vergine" ;
+               rdfs:comment "Individuo che rappresenta la costellazione della Vergine."@it ;
+               rdfs:label "Vergine"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#Via_Lattea
+astroo:Via_Lattea rdf:type owl:NamedIndividual ;
+                  astroo:raggrupa astroo:Sistema_Procyon ,
+                                  astroo:Sistema_Sirio ,
+                                  astroo:Sistema_solare ;
+                  astroo:nome "Via Lattea" ;
+                  rdfs:comment "Individuo che rappresenta la galassia \"Via Lattea\"."@it ;
+                  rdfs:label "Via Lattea"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#WR-102
+astroo:WR-102 rdf:type owl:NamedIndividual ;
+              astroo:distanzaDalSole "8610.0"^^xsd:float ;
+              astroo:emetteLuce "true"^^xsd:boolean ;
+              astroo:formaSferoidale "true"^^xsd:boolean ;
+              astroo:nome "WR-102" ;
+              astroo:stadioVitale "Stabile" ;
+              astroo:temperatura "210000.0"^^xsd:double ;
+              rdfs:comment "Individuo che rappresenta la stella WR-102."@it ;
+              rdfs:label "WR-102"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#WR-142
+astroo:WR-142 rdf:type owl:NamedIndividual ;
+              astroo:distanzaDalSole "5400.0"^^xsd:float ;
+              astroo:emetteLuce "true"^^xsd:boolean ;
+              astroo:formaSferoidale "true"^^xsd:boolean ;
+              astroo:nome "WR-142" ;
+              astroo:stadioVitale "Stabile" ;
+              astroo:temperatura "200000.0"^^xsd:double ;
+              rdfs:comment "Individuo che rappresenta la stella WR-142"@it ;
+              rdfs:label "WR-142"@it .
+
+
+###  http://www.semanticweb.org/AstronomyOntology#UGPS_0722−05
+<http://www.semanticweb.org/AstronomyOntology#UGPS_0722−05> rdf:type owl:NamedIndividual ;
+                                                            astroo:composizionePianeta "Gassosa" ;
+                                                            astroo:distanzaDalSole "13.0"^^xsd:float ;
+                                                            astroo:emetteLuce "false"^^xsd:boolean ;
+                                                            astroo:formaSferoidale "true"^^xsd:boolean ;
+                                                            astroo:haOrbita "Inesistente" ;
+                                                            astroo:nome "UGPS 0722−05" ;
+                                                            rdfs:comment "Individuo che rappresenta il pianeta interstellare UGPS 0722−05."@it ;
+                                                            rdfs:label "UGPS 0722−05"@it .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( astroo:Classe_A
+                astroo:Classe_B
+                astroo:Classe_F
+                astroo:Classe_G
+                astroo:Classe_K
+                astroo:Classe_M
+                astroo:Classe_O
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( astroo:Corpo_celeste_non_sferoidale
+                astroo:Pianeta
+                astroo:Stella
+              )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( astroo:Kepler-31
+                        astroo:Kepler-31B
+                        astroo:Kepler-31C
+                        astroo:Kepler-31D
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( astroo:Procyon_A
+                        astroo:Procyon_B
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( astroo:Sirio_A
+                        astroo:Sirio_B
+                      )
+] .
+
+
+#################################################################
+#    Rules
+#################################################################
+
+astroo:a rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+astroo:b rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+astroo:c rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+astroo:d rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Un corpo celeste è un corpo celeste che non emette luce ed ha forma non sferoidale." ;
+   rdfs:label "Corpo celeste non sferoidale" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:formaSferoidale ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> "false"^^xsd:boolean
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:emetteLuce ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> astroo:a ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> "false"^^xsd:boolean
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Corpo_celeste ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> astroo:a
+                                                                           ] ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Corpo_celeste_non_sferoidale ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Le nane bianche sono stelle degeneri con temperature molto alte." ;
+   rdfs:label "Nana bianca" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Degenere ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:temperatura ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> astroo:a ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> astroo:b
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#greaterThanOrEqual> ;
+                                                                             <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                          rdf:first astroo:b ;
+                                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first 7000 ;
+                                                                                                                                     rdf:rest rdf:nil
+                                                                                                                                   ]
+                                                                                                                        ]
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#lessThan> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first astroo:b ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first 33000 ;
+                                                                                                                                                rdf:rest rdf:nil
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Nana_bianca ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Allinea la classe Galassia con la classe Galaxy ottenuta da DBpedia." ;
+   rdfs:label "AllineamentoGalassia" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Galassia ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> dbo:Galaxy ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Un satellite naturale fa parte di un sistema planetario se il pianeta attorno a cui orbita il satellite, orbita attorno alla stella attorno a cui si è formato il sistema." ;
+   rdfs:label "satelliteInSistema" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Satellite_naturale ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:orbitaAttornoPianeta ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> astroo:a ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> astroo:b
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Pianeta ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> astroo:b
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:orbitaAttornoStella ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> astroo:b ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument2> astroo:c
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Stella ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> astroo:c
+                                                                                                 ] ;
+                                                                                       rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                  rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:centroDiGravitàDi ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument1> astroo:c ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument2> astroo:d
+                                                                                                            ] ;
+                                                                                                  rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                             rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Sistema_planetario ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#argument1> astroo:d
+                                                                                                                       ] ;
+                                                                                                             rdf:rest rdf:nil
+                                                                                                           ]
+                                                                                                ]
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:satelliteInSistema ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> astroo:d
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Una stella illumina un pianeta quando questo orbita nel sistema planetario creato attorno ad essa." ;
+   rdfs:label "illuminaPianeta" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Stella ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:faOrbitarePianeta ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> astroo:a ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> astroo:b
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#classPredicate> astroo:Pianeta ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> astroo:b
+                                                                           ] ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> astroo:illuminaPianeta ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> astroo:a ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> astroo:b
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
